@@ -16,10 +16,10 @@ const schema = object({
             return parts.filter((x) => Boolean(x)).length >= 2;
         }),
     email: string().required('Invalid').email('Invalid email address'),
-    password: string()
+    pw: string()
         .min(4, 'Password contains at least 4 characters')
         .max(30, 'Password contains maximum 30 characters'),
-    confirmPassword: string().oneOf([ref('password')], 'Passwords must match'),
+    pwConfirm: string().oneOf([ref('pw')], 'Passwords must match'),
     domain: string().required('Please enter domain.'),
 }).required();
 
@@ -43,9 +43,9 @@ export const MerchantRegisterForm = ({ initial, onSubmit }) => {
             <form onSubmit={handleSubmit(handleFormSubmit)}>
                 <InputField name='username' control={control} label='Username' />
                 <InputField name='email' control={control} label='Email' />
-                <InputField name='password' type='password' control={control} label='Password' />
+                <InputField name='pw' type='password' control={control} label='Password' />
                 <InputField
-                    name='confirmPassword'
+                    name='pwConfirm'
                     type='password'
                     control={control}
                     label='Confirm password'

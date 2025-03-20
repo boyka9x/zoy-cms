@@ -1,3 +1,4 @@
+import { shopApi } from '@/api-client';
 import { MerchantRegisterForm } from '@/components/Features/Merchant';
 import { Box, Paper, Typography } from '@mui/material';
 import Link from 'next/link';
@@ -5,14 +6,19 @@ import Link from 'next/link';
 const initialMerchant = {
     username: '',
     email: '',
-    password: '',
-    confirmPassword: '',
+    pw: '',
+    pwConfirm: '',
     domain: '',
 };
 
 export default function RegisterMerchant() {
     const handleMerchantRegister = async (merchant) => {
-        console.log(merchant);
+        try {
+            const shop = await shopApi.register(merchant);
+            console.log(shop);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (
