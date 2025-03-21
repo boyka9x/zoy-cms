@@ -1,10 +1,14 @@
 import axios from "axios";
 
-const axiosClient = axios.create({
+export const axiosClient = axios.create({
     baseURL: '/api',
     headers: {
         'Content-Type': 'application/json'
     }
 });
 
-export default axiosClient;
+axiosClient.interceptors.response.use(
+    function (response) {
+        return response.data;
+    },
+);

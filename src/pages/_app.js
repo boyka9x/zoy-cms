@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 import { store } from "@/redux/store";
 import "@/styles/globals.css";
+import { axiosClient } from "@/api-client";
 
 export default function App({ Component, pageProps }) {
   const Layout = Component.Layout ?? EmptyLayout;

@@ -1,8 +1,38 @@
+import { RRWebPlayer } from '@/components/Features/Replay';
+import { Box } from '@mui/material';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import rrwebPlayer from 'rrweb-player';
+import useSWR from 'swr';
+
 export default function Replay() {
+    const router = useRouter();
+    const { id } = router.query;
+    const { data: events } = useSWR(id && `/events?sessionId=${id}`);
+
+    useEffect(() => {
+        if (!events) return;
+
+        console.log(document.querySelector('#player > div.rrweb'));
+        new rrwebPlayer({
+            target: document.querySelector('#player > div.rrweb'),
+            props: {
+                events: events.data,
+            },
+        });
+    }, [events]);
+
     return (
-        <div>
-            <h2>Replay</h2>
-            {/* Add your replay logic here */}
-        </div>
+        <Box
+            sx={{
+                display: 'flex',
+                height: '100vh',
+                width: '100vw',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
+            <RRWebPlayer />
+        </Box>
     );
 }
