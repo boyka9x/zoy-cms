@@ -13,7 +13,6 @@ export default function Replay() {
     useEffect(() => {
         if (!events) return;
 
-        console.log(document.querySelector('#player > div.rrweb'));
         new rrwebPlayer({
             target: document.querySelector('#player > div.rrweb'),
             props: {
@@ -30,9 +29,12 @@ export default function Replay() {
                 width: '100vw',
                 justifyContent: 'center',
                 alignItems: 'center',
+                backgroundColor: '#f5f5f5',
             }}
         >
             <RRWebPlayer />
+
+            {/* Timeline */}
         </Box>
     );
 }
