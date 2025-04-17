@@ -8,6 +8,13 @@ import { axiosClient } from "@/api-client";
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
 import AppTheme from "@/components/Theme/App";
 import { chartsCustom, dataGridCustom, datePickersCustom, treeViewCustom } from "@/components/Theme/Custom/Layout";
+import dynamic from 'next/dynamic';
+import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
+
+const LocalizationProvider = dynamic(
+  () => import('@mui/x-date-pickers-pro').then((mod) => mod.LocalizationProvider),
+  { ssr: false }
+);
 
 const xThemeComponents = {
   ...chartsCustom,
@@ -36,9 +43,11 @@ export default function App({ Component, pageProps }) {
         <StyledEngineProvider injectFirst>
           <AppTheme {...pageProps} themeComponents={xThemeComponents}>
             <CssBaseline enableColorScheme />
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </LocalizationProvider>
           </AppTheme>
         </StyledEngineProvider>
 

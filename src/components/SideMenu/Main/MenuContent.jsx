@@ -1,54 +1,61 @@
-import * as React from 'react';
+'use client';
+
+import {
+    FormatIndentIncrease,
+    HomeMax,
+    HomeOutlined,
+    PictureInPicture,
+    SupervisorAccount,
+} from '@mui/icons-material';
+import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
+import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
-import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
-import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
-import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
-import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
-import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
+
+import { usePathname, useRouter } from 'next/navigation';
 
 const mainListItems = [
-    { text: 'Home', icon: <HomeRoundedIcon /> },
-    { text: 'Analytics', icon: <AnalyticsRoundedIcon /> },
-    { text: 'Clients', icon: <PeopleRoundedIcon /> },
-    { text: 'Tasks', icon: <AssignmentRoundedIcon /> },
+    { text: 'Home', icon: <HomeOutlined />, path: '/' },
+    { text: 'Session Replays', icon: <FormatIndentIncrease />, path: '/replays' },
+    { text: 'Heatmap', icon: <PictureInPicture />, path: '/heatmap' },
+    { text: 'Visitors', icon: <SupervisorAccount />, path: '/visitors' },
+    { text: 'Analytics', icon: <AnalyticsRoundedIcon />, path: '/analytics' },
 ];
 
 const secondaryListItems = [
-    { text: 'Settings', icon: <SettingsRoundedIcon /> },
-    { text: 'About', icon: <InfoRoundedIcon /> },
-    { text: 'Feedback', icon: <HelpRoundedIcon /> },
+    { text: 'Settings', icon: <SettingsRoundedIcon />, path: '/settings' },
+    { text: 'About', icon: <InfoRoundedIcon />, path: '/about' },
+    { text: 'Feedback', icon: <HelpRoundedIcon />, path: '/feedback' },
 ];
 
 export default function MenuContent() {
+    const router = useRouter();
+    const pathname = usePathname();
+
+    const renderListItems = (items) =>
+        items.map((item, index) => {
+            const selected = pathname === item.path;
+            return (
+                <ListItem key={index} disablePadding sx={{ display: 'block' }}>
+                    <ListItemButton selected={selected} onClick={() => router.push(item.path)}>
+                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        <ListItemText primary={item.text} />
+                    </ListItemButton>
+                </ListItem>
+            );
+        });
+
     return (
         <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
-            <List dense>
-                {mainListItems.map((item, index) => (
-                    <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-                        <ListItemButton selected={index === 0}>
-                            <ListItemIcon>{item.icon}</ListItemIcon>
-                            <ListItemText primary={item.text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-            <List dense>
-                {secondaryListItems.map((item, index) => (
-                    <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-                        <ListItemButton>
-                            <ListItemIcon>{item.icon}</ListItemIcon>
-                            <ListItemText primary={item.text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
+            <List dense>{renderListItems(mainListItems)}</List>
+            <List dense>{renderListItems(secondaryListItems)}</List>
         </Stack>
     );
 }
