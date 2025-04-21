@@ -1,8 +1,24 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { PlayCircle } from '@mui/icons-material';
+import {
+    IconButton,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+} from '@mui/material';
 
-export const ReplayTable = ({ sessions }) => {
+export const ReplayTable = ({ sessions, onPlay }) => {
+    const handlePlaySesssion = (session) => {
+        if (!onPlay) return;
+
+        onPlay(session);
+    };
+
     return (
-        <TableContainer>
+        <TableContainer component={Paper}>
             <Table size='small' aria-label='simple table'>
                 <TableHead>
                     <TableRow>
@@ -29,9 +45,9 @@ export const ReplayTable = ({ sessions }) => {
                                     aria-label='edit'
                                     size='small'
                                     color='secondary'
-                                    onClick={() => handlePlay?.(session)}
+                                    onClick={() => handlePlaySesssion(session)}
                                 >
-                                    <PlayCircleIcon />
+                                    <PlayCircle />
                                 </IconButton>
                             </TableCell>
                         </TableRow>

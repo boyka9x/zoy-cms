@@ -1,21 +1,28 @@
-import { RRWebPlayer } from '@/components/Features/Replay';
-import { Box } from '@mui/material';
+import { ReplayTimeline } from '@/components/Features/Replay';
+import { MainLayout } from '@/components/Layout';
+import { Box, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import rrwebPlayer from 'rrweb-player';
 import useSWR from 'swr';
 
 export default function Replay() {
     const router = useRouter();
     const { id } = router.query;
-    const { data: events } = useSWR(id && `/events?sessionId=${id}`);
+    const containerRef = useRef(null);
+
+    const { data: events } = useSWR(id ? `/events?sessionId=${id}` : null, {
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+    });
 
     useEffect(() => {
-        if (!events) return;
+        if (!events || !containerRef.current) return;
 
-        console.log(document.querySelector('#player > div.rrweb'));
+        containerRef.current.innerHTML = '';
+
         new rrwebPlayer({
-            target: document.querySelector('#player > div.rrweb'),
+            target: containerRef.current,
             props: {
                 events: events.data,
             },
@@ -23,16 +30,20 @@ export default function Replay() {
     }, [events]);
 
     return (
-        <Box
-            sx={{
-                display: 'flex',
-                height: '100vh',
-                width: '100vw',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
-            <RRWebPlayer />
+        <Box sx={{ height: '100vh', p: 2, boxSizing: 'border-box' }}>
+            <Grid container spacing={2} sx={{ height: '100%' }}>
+                {/* RRWeb Player Area */}
+                <Grid item xs={12} md={8}>
+                    <div ref={containerRef} />
+                </Grid>
+
+                {/* Timeline Area */}
+                <Grid item xs={12} md={4} sx={{ height: '100%', overflowY: 'auto' }}>
+                    <ReplayTimeline />
+                </Grid>
+            </Grid>
         </Box>
     );
 }
+
+Replay.Layout = MainLayout;

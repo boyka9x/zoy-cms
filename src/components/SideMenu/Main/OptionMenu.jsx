@@ -1,15 +1,16 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Divider, { dividerClasses } from '@mui/material/Divider';
-import Menu from '@mui/material/Menu';
-import MuiMenuItem from '@mui/material/MenuItem';
-import { paperClasses } from '@mui/material/Paper';
-import { listClasses } from '@mui/material/List';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon, { listItemIconClasses } from '@mui/material/ListItemIcon';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded';
 import { Badge, badgeClasses, IconButton } from '@mui/material';
+import Divider, { dividerClasses } from '@mui/material/Divider';
+import { listClasses } from '@mui/material/List';
+import ListItemIcon, { listItemIconClasses } from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Menu from '@mui/material/Menu';
+import MuiMenuItem from '@mui/material/MenuItem';
+import { paperClasses } from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
+import { signOut } from 'next-auth/react';
+import * as React from 'react';
 
 const MenuItem = styled(MuiMenuItem)({
     margin: '2px 0',
@@ -63,13 +64,10 @@ export default function OptionsMenu() {
                 }}
             >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
-                <Divider />
-                <MenuItem onClick={handleClose}>Add another account</MenuItem>
-                <MenuItem onClick={handleClose}>Settings</MenuItem>
+                <MenuItem onClick={handleClose}>Change password</MenuItem>
                 <Divider />
                 <MenuItem
-                    onClick={handleClose}
+                    onClick={() => signOut({ callbackUrl: '/merchants/login' })}
                     sx={{
                         [`& .${listItemIconClasses.root}`]: {
                             ml: 'auto',

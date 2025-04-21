@@ -1,9 +1,10 @@
 'use client';
 
 import {
+    AutoAwesome,
     FormatIndentIncrease,
-    HomeMax,
     HomeOutlined,
+    LocalAtmRounded,
     PictureInPicture,
     SupervisorAccount,
 } from '@mui/icons-material';
@@ -27,10 +28,12 @@ const mainListItems = [
     { text: 'Heatmap', icon: <PictureInPicture />, path: '/heatmap' },
     { text: 'Visitors', icon: <SupervisorAccount />, path: '/visitors' },
     { text: 'Analytics', icon: <AnalyticsRoundedIcon />, path: '/analytics' },
+    { text: 'Integration', icon: <AutoAwesome />, path: '/intergration' },
 ];
 
 const secondaryListItems = [
     { text: 'Settings', icon: <SettingsRoundedIcon />, path: '/settings' },
+    { text: 'Pricing plans', icon: <LocalAtmRounded />, path: '/pricing-plans' },
     { text: 'About', icon: <InfoRoundedIcon />, path: '/about' },
     { text: 'Feedback', icon: <HelpRoundedIcon />, path: '/feedback' },
 ];

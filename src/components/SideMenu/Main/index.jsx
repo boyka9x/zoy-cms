@@ -9,6 +9,7 @@ import MenuContent from './MenuContent';
 import SelectContent from './SelectContent';
 import CardAlert from './CartAlert';
 import OptionsMenu from './OptionMenu';
+import { useSession } from 'next-auth/react';
 
 const drawerWidth = 240;
 
@@ -24,6 +25,8 @@ const Drawer = styled(MuiDrawer)({
 });
 
 export const MainSideMenu = () => {
+    const { data: session } = useSession();
+
     return (
         <Drawer
             variant='permanent'
@@ -65,18 +68,13 @@ export const MainSideMenu = () => {
                     borderColor: 'divider',
                 }}
             >
-                <Avatar
-                    sizes='small'
-                    alt='Riley Carter'
-                    // src='/static/images/avatar/7.jpg'
-                    sx={{ width: 36, height: 36 }}
-                />
+                <Avatar sizes='small' alt={session?.username} sx={{ width: 36, height: 36 }} />
                 <Box sx={{ mr: 'auto' }}>
                     <Typography variant='body2' sx={{ fontWeight: 500, lineHeight: '16px' }}>
-                        Riley Carter
+                        {session?.username}
                     </Typography>
                     <Typography variant='caption' sx={{ color: 'text.secondary' }}>
-                        riley@email.com
+                        {session?.email}
                     </Typography>
                 </Box>
                 <OptionsMenu />

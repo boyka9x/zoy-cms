@@ -10,6 +10,7 @@ import AppTheme from "@/components/Theme/App";
 import { chartsCustom, dataGridCustom, datePickersCustom, treeViewCustom } from "@/components/Theme/Custom/Layout";
 import dynamic from 'next/dynamic';
 import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
+import { SessionProvider } from "next-auth/react";
 
 const LocalizationProvider = dynamic(
   () => import('@mui/x-date-pickers-pro').then((mod) => mod.LocalizationProvider),
@@ -23,7 +24,7 @@ const xThemeComponents = {
   ...treeViewCustom,
 };
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps: { session, ...pageProps } }) {
   const Layout = Component.Layout ?? EmptyLayout;
 
   return (
@@ -44,9 +45,11 @@ export default function App({ Component, pageProps }) {
           <AppTheme {...pageProps} themeComponents={xThemeComponents}>
             <CssBaseline enableColorScheme />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
+              <SessionProvider session={session}>
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              </SessionProvider>
             </LocalizationProvider>
           </AppTheme>
         </StyledEngineProvider>

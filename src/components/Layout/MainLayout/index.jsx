@@ -6,8 +6,18 @@ import { ColorModeIconDropdown } from '@/components/Theme/Mode';
 import { MenuButton } from '@/components/Common';
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import Head from 'next/head';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 export const MainLayout = ({ children }) => {
+    const router = useRouter();
+    const { data, status } = useSession();
+
+    if (status === 'unauthenticated') {
+        router.push('/merchants/login');
+        return;
+    }
+
     return (
         <>
             <Head>

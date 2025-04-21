@@ -1,36 +1,38 @@
-import {
-    Box,
-    Container,
-    IconButton,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-} from '@mui/material';
-import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import { ReplayFilter, ReplayTable } from '@/components/Features/Replay';
+import { MainLayout } from '@/components/Layout';
+import { Box, Container, Pagination, Stack } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import useSWR from 'swr';
-import { MainLayout } from '@/components/Layout';
-import { ReplayFilter } from '@/components/Features/Replay';
 
 export default function ReplayList() {
-    // const router = useRouter();
+    const router = useRouter();
 
-    // const { data: sessions } = useSWR('/sessions');
+    const { data: sessions } = useSWR('/sessions');
 
-    // const handlePlay = useCallback(
-    //     (session) => {
-    //         router.push(`/replays/${session._id}`);
-    //     },
-    //     [router]
-    // );
+    const handlePlaySession = useCallback(
+        (session) => {
+            router.push(`/replays/${session._id}`);
+        },
+        [router]
+    );
 
     return (
         <Container>
-            <ReplayFilter />
+            <Stack spacing={2}>
+                <ReplayFilter />
+                <ReplayTable sessions={sessions} onPlay={handlePlaySession} />
+
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Pagination count={10} variant='outlined' shape='rounded' />
+                </Box>
+            </Stack>
         </Container>
     );
 }
