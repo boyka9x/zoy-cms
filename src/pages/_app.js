@@ -39,6 +39,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
             }
           },
           shouldRetryOnError: false,
+          revalidateOnFocus: false,
         }}
       >
         <StyledEngineProvider injectFirst>

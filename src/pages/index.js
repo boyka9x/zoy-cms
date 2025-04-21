@@ -3,6 +3,7 @@ import { MainLayout } from "@/components/Layout";
 import { Container, Grid2, Paper, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 
+import { Box } from "@mui/material";
 export default function Home() {
   const { data: session } = useSession();
   console.log(session)
