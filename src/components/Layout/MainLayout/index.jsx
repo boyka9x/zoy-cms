@@ -8,15 +8,23 @@ import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
 import Head from 'next/head';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { shopActions } from '@/redux/slices/shop.slice';
 
 export const MainLayout = ({ children }) => {
     const router = useRouter();
-    const { data, status } = useSession();
+    const dispatch = useDispatch();
+    const { status } = useSession();
 
-    if (status === 'unauthenticated') {
-        router.push('/merchants/login');
-        return;
-    }
+    useEffect(() => {
+        if (status === 'loading') return;
+        if (status === 'unauthenticated') router.push('/merchants/login');
+        if (status === 'authenticated') {
+            dispatch(shopActions.fetchShop());
+            router.push('/');
+        }
+    }, [status]);
 
     return (
         <>

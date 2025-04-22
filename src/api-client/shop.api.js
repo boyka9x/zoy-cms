@@ -7,5 +7,11 @@ export const shopApi = {
     },
     login: ({ email, password }) => {
         return axios.post(`${process.env.SERVER_URL}/shops/login`, { email, password });
-    }
+    },
+    getShop: () => {
+        return axiosClient.get('/shops');
+    },
+    changeModule: (payload) => {
+        return axiosClient.post('/shops/modules', payload);
+    },
 }

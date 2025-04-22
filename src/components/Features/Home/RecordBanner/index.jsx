@@ -1,6 +1,6 @@
 import { Box, Button, Paper, Typography } from '@mui/material';
 
-export const HomeRecordBanner = ({ status }) => {
+export const HomeRecordBanner = ({ status, onChange }) => {
     return (
         <Paper sx={{ mt: 2, p: 2, backgroundColor: '#fdfdfd' }} elevation={1}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -13,7 +13,7 @@ export const HomeRecordBanner = ({ status }) => {
                     </Typography>
                 </Typography>
 
-                <Button size='small' variant='contained'>
+                <Button size='small' variant='contained' onClick={() => onChange(!status)}>
                     {status ? 'Disable' : 'Enable'}
                 </Button>
             </Box>

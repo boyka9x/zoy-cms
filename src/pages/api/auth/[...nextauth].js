@@ -39,7 +39,7 @@ const handler = NextAuth({
                 token.email = user.email;
                 token.username = user.username;
                 token.code = user.code;
-                token.session_count = user.session_count;
+                token.domain = user.domain;
             }
             return token;
         },
@@ -48,7 +48,7 @@ const handler = NextAuth({
             session.email = token.email;
             session.username = token.username;
             session.code = token.code;
-            session.session_count = token.session_count;
+            session.domain = token.domain;
             return session;
         },
     },
