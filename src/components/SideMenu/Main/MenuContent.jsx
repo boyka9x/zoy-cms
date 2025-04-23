@@ -28,7 +28,7 @@ const mainListItems = [
     { text: 'Heatmap', icon: <PictureInPicture />, path: '/heatmap' },
     { text: 'Visitors', icon: <SupervisorAccount />, path: '/visitors' },
     { text: 'Analytics', icon: <AnalyticsRoundedIcon />, path: '/analytics' },
-    { text: 'Integration', icon: <AutoAwesome />, path: '/intergration' },
+    { text: 'Integrations', icon: <AutoAwesome />, path: '/integrations' },
 ];
 
 const secondaryListItems = [
