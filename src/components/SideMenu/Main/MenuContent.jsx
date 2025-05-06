@@ -25,7 +25,7 @@ import { usePathname, useRouter } from 'next/navigation';
 const mainListItems = [
     { text: 'Home', icon: <HomeOutlined />, path: '/' },
     { text: 'Session Replays', icon: <FormatIndentIncrease />, path: '/replays' },
-    { text: 'Heatmap', icon: <PictureInPicture />, path: '/heatmap' },
+    { text: 'Heatmaps', icon: <PictureInPicture />, path: '/heatmaps' },
     { text: 'Visitors', icon: <SupervisorAccount />, path: '/visitors' },
     { text: 'Analytics', icon: <AnalyticsRoundedIcon />, path: '/analytics' },
     { text: 'Integrations', icon: <AutoAwesome />, path: '/integrations' },

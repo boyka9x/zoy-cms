@@ -22,7 +22,8 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
 const breadcrumbMap = {
     '/': [{ title: 'Dashboard', href: '/' }, { title: 'Home' }],
     '/replays': [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Session Replays' }],
-    '/heatmap': [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Heatmap' }],
+    '/heatmaps': [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Heatmaps' }],
+    '/heatmaps/view': [{ title: 'Heatmap', href: '/heatmaps' }, { title: 'View' }],
     '/visitors': [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Visitors' }],
     '/analytics': [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Analytics' }],
     '/settings': [{ title: 'Settings' }],
