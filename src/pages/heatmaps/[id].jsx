@@ -1,3 +1,4 @@
+import { eventApi } from '@/api-client';
 import {
     HeatmapClickType,
     HeatmapContent,
@@ -5,10 +6,11 @@ import {
     HeatmapSidebar,
 } from '@/components/Features/Heatmap';
 import { MainLayout } from '@/components/Layout';
+import { SnapshotHelper } from '@/helpers';
 import { selectHeatmapPage } from '@/redux/slices/heatmap.slice';
 import { selectShop } from '@/redux/slices/shop.slice';
-import { Container, Grid, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
+import { Box, Container, Grid, Stack, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useSWR from 'swr';
 
@@ -17,6 +19,7 @@ export default function HeatmapView() {
     const shop = useSelector(selectShop);
 
     const [device, setDevice] = useState('Desktop');
+    const [type, setType] = useState('click');
 
     const { data: clicks } = useSWR(
         page
@@ -28,13 +31,45 @@ export default function HeatmapView() {
         }
     );
 
-    console.log(clicks);
+    const [snapshot, setSnapshot] = useState({
+        building: 'processing',
+        iframe: null,
+        hmInstances: [],
+    });
+
+    useEffect(() => {
+        const fetchSnapshot = async () => {
+            setSnapshot((prev) => ({ ...prev, building: 'proccessing' }));
+            try {
+                const res = await eventApi.findSnapshot({
+                    shopId: shop._id,
+                    page: page?.href,
+                    device: device,
+                });
+
+                const { iframe, hmInstances } = await SnapshotHelper.build(res.data.data);
+
+                setSnapshot((prev) => ({
+                    ...prev,
+                    iframe: iframe,
+                    hmInstances: hmInstances || [],
+                    building: 'success',
+                }));
+            } catch (error) {
+                console.error('Error fetching snapshot:', error);
+                setSnapshot((prev) => ({ ...prev, building: 'error' }));
+            }
+        };
+
+        fetchSnapshot();
+    }, []);
+
     const handleDeviceChange = (newDevice) => {
         setDevice(newDevice);
     };
 
     return (
-        <Container>
+        <Box sx={{ height: '100vh', width: '100%' }}>
             <Typography variant='h6'>{page?.title}</Typography>
             <Typography variant='body1' sx={{ mb: 2 }}>
                 URL: {page?.href}
@@ -45,15 +80,15 @@ export default function HeatmapView() {
                 <HeatmapClickType />
             </Stack>
 
-            <Grid container spacing={2} sx={{ p: 2 }}>
-                <Grid sx={12} md={8}>
+            <Grid container spacing={2} sx={{ height: '80%' }}>
+                <Grid item xs={12} md={8}>
                     <HeatmapContent />
                 </Grid>
-                <Grid sx={12} md={4}>
+                <Grid item xs={12} md={4}>
                     <HeatmapSidebar />
                 </Grid>
             </Grid>
-        </Container>
+        </Box>
     );
 }
 
