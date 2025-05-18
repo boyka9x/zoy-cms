@@ -1,26 +1,34 @@
 import { HeatmapFilter, HeatmapTable } from '@/components/Features/Heatmap';
 import { MainLayout } from '@/components/Layout';
+import { heatmapActions } from '@/redux/slices/heatmap.slice';
 import { Box, Container, Pagination, Stack } from '@mui/material';
 import { useRouter } from 'next/router';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import useSWR from 'swr';
 
 export default function HeatmapPage() {
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const { data: pageviews } = useSWR(
         '/pageviews/list-page?' +
             new URLSearchParams({
                 page: 1,
                 limit: 5,
-                from: new Date(),
-                to: new Date(),
+                from: new Date().toUTCString(),
+                to: new Date().toUTCString(),
             })
     );
 
-    const handleViewHeatmap = (page) => {
-        if (!page || !page.href) return;
-        router.push(`/heatmaps/view?page=${page.href}`);
-    };
+    const handleViewHeatmap = useCallback(
+        (page) => {
+            if (!page) return;
+            dispatch(heatmapActions.setPage(page));
+            router.push('/heatmaps/view');
+        },
+        [router]
+    );
 
     return (
         <Container>

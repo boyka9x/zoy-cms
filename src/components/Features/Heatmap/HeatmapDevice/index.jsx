@@ -5,13 +5,13 @@ import TabletAndroidIcon from '@mui/icons-material/TabletAndroid';
 import StayCurrentPortraitIcon from '@mui/icons-material/StayCurrentPortrait';
 
 const DEVICE_TYPES = [
-    { type: 'desktop', icon: <DesktopMacIcon /> },
-    { type: 'tablet', icon: <TabletAndroidIcon /> },
-    { type: 'mobile', icon: <StayCurrentPortraitIcon /> },
+    { type: 'Desktop', icon: <DesktopMacIcon /> },
+    { type: 'Tablet', icon: <TabletAndroidIcon /> },
+    { type: 'Mobile', icon: <StayCurrentPortraitIcon /> },
 ];
 
 export const HeatmapDevice = ({ defaultSelect, devices = {}, onChange }) => {
-    const [selected, setSelected] = useState(defaultSelect || 'desktop');
+    const [selected, setSelected] = useState(defaultSelect || 'Desktop');
 
     useEffect(() => {
         if (defaultSelect) {
@@ -33,6 +33,7 @@ export const HeatmapDevice = ({ defaultSelect, devices = {}, onChange }) => {
                     startIcon={icon}
                     variant={selected === type ? 'contained' : 'outlined'}
                     onClick={() => handleSelect(type)}
+                    disabled={!devices[type]}
                 >
                     {devices[type] || 0}
                 </Button>

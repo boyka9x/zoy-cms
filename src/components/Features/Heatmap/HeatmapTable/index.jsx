@@ -24,7 +24,7 @@ export const HeatmapTable = ({ pageviews, onView }) => {
                     <TableRow>
                         <TableCell align='left'>Page</TableCell>
                         <TableCell align='left'>Pageviews</TableCell>
-                        <TableCell align='left'>PC</TableCell>
+                        <TableCell align='left'>Desktop</TableCell>
                         <TableCell align='right'>Tablet</TableCell>
                         <TableCell align='right'>Mobile</TableCell>
                         <TableCell align='right'>Action</TableCell>
@@ -35,9 +35,9 @@ export const HeatmapTable = ({ pageviews, onView }) => {
                         <TableRow hover key={pageview?.href}>
                             <TableCell align='left'>{pageview?.href}</TableCell>
                             <TableCell align='left'>{pageview.counts}</TableCell>
-                            <TableCell align='left'>{pageview.device?.desktop}</TableCell>
-                            <TableCell align='right'>{pageview.device?.tablet}</TableCell>
-                            <TableCell align='right'>{pageview.device?.mobile}</TableCell>
+                            <TableCell align='left'>{pageview.device?.Desktop || 0}</TableCell>
+                            <TableCell align='right'>{pageview.device?.Tablet || 0}</TableCell>
+                            <TableCell align='right'>{pageview.device?.Mobile || 0}</TableCell>
                             <TableCell align='right'>
                                 <IconButton
                                     aria-label='edit'
