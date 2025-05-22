@@ -26,6 +26,8 @@ const breadcrumbMap = {
     '/heatmaps/view': [{ title: 'Heatmap', href: '/heatmaps' }, { title: 'View' }],
     '/visitors': [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Visitors' }],
     '/analytics': [{ title: 'Dashboard', href: '/dashboard' }, { title: 'Analytics' }],
+    '/integrations': [{ title: 'Home', href: '/' }, { title: 'Integrations' }],
+    '/pricing-plans': [{ title: 'Home', href: '/' }, { title: 'Pricing plans' }],
     '/settings': [{ title: 'Settings' }],
     '/about': [{ title: 'About' }],
     '/feedback': [{ title: 'Feedback' }],

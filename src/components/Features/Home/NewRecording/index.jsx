@@ -6,7 +6,7 @@ export const NewRecording = ({ count = 0 }) => {
     const router = useRouter();
 
     const handleRedirect = () => {
-        router.push('/recordings');
+        router.push('/replays');
     };
 
     return (

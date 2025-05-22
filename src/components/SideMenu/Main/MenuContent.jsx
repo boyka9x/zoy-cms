@@ -9,8 +9,6 @@ import {
     SupervisorAccount,
 } from '@mui/icons-material';
 import AnalyticsRoundedIcon from '@mui/icons-material/AnalyticsRounded';
-import HelpRoundedIcon from '@mui/icons-material/HelpRounded';
-import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 
 import List from '@mui/material/List';
@@ -34,8 +32,6 @@ const mainListItems = [
 const secondaryListItems = [
     { text: 'Settings', icon: <SettingsRoundedIcon />, path: '/settings' },
     { text: 'Pricing plans', icon: <LocalAtmRounded />, path: '/pricing-plans' },
-    { text: 'About', icon: <InfoRoundedIcon />, path: '/about' },
-    { text: 'Feedback', icon: <HelpRoundedIcon />, path: '/feedback' },
 ];
 
 export default function MenuContent() {

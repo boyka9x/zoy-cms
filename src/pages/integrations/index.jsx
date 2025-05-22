@@ -10,10 +10,17 @@ import useSWR from "swr";
 export default function Integration() {
     const shop = useSelector(selectShop);
     const [domain, setDomain] = useState(shop?.shopify_domain || '');
+    const [error, setError] = useState('');
 
     const { data: isCheck } = useSWR('/shops/check-shopify');
 
     const handleConnectShopify = () => {
+        const valid = /^[a-zA-Z0-9-]+\.myshopify\.com$/.test(domain);
+        if (!valid) {
+            setError('Please enter a valid Shopify domain (e.g. example.myshopify.com)');
+            return;
+        }
+        setError('');
         if (domain) {
             window.open(`https://${domain}/admin/oauth/redirect_from_cli?client_id=df5796e07bd3899b54f11db327f9d4b3`, '_blank');
         }
@@ -49,6 +56,8 @@ export default function Integration() {
                         sx={{ width: '35%', minWidth: '100px' }}
                         value={domain}
                         onChange={(e) => setDomain(e.target.value)}
+                        error={Boolean(error)}
+                        helperText={error}
                     />
                     <Button variant="contained" size="small" onClick={handleConnectShopify}>
                         {isCheck?.data?.shopify_domain ? 'Connected' : 'Connect'}

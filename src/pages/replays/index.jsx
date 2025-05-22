@@ -1,14 +1,19 @@
 import { ReplayFilter, ReplayTable } from '@/components/Features/Replay';
 import { MainLayout } from '@/components/Layout';
+import { selectSessionFilter, sessionActions } from '@/redux/slices/session.slice';
 import { Box, Container, Pagination, Stack } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import useSWR from 'swr';
 
 export default function ReplayList() {
     const router = useRouter();
+    const dispatch = useDispatch();
+    const filter = useSelector(selectSessionFilter);
+    const { page, limit } = filter;
 
-    const { data: sessions } = useSWR('/sessions');
+    const { data: sessions } = useSWR(`/sessions?page=${page}&limit=${limit}`);
 
     const handlePlaySession = useCallback(
         (session) => {
@@ -16,6 +21,15 @@ export default function ReplayList() {
         },
         [router]
     );
+
+    const handlePageChange = (value) => {
+        dispatch(
+            sessionActions.setFilter({
+                ...filter,
+                page: value,
+            })
+        );
+    };
 
     return (
         <Container>
@@ -30,7 +44,13 @@ export default function ReplayList() {
                         alignItems: 'center',
                     }}
                 >
-                    <Pagination count={10} variant='outlined' shape='rounded' />
+                    <Pagination
+                        page={page}
+                        count={Math.ceil(sessions?.total / limit)}
+                        variant='outlined'
+                        shape='rounded'
+                        onChange={handlePageChange}
+                    />
                 </Box>
             </Stack>
         </Container>

@@ -32,9 +32,9 @@ export const ReplayTable = ({ sessions, onPlay }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {sessions?.data?.map((session, index) => (
+                    {sessions?.data?.map((session) => (
                         <TableRow hover key={session._id}>
-                            <TableCell align='left'>{index + 1}</TableCell>
+                            <TableCell align='left'>{session._id}</TableCell>
                             <TableCell align='left'>{session.duration}</TableCell>
                             <TableCell align='left'>{session.device}</TableCell>
                             <TableCell align='right'>{session.browser}</TableCell>

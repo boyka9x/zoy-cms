@@ -14,4 +14,7 @@ export const shopApi = {
     changeModule: (payload) => {
         return axiosClient.post('/shops/modules', payload);
     },
+    subPricing: ({ code }) => {
+        return axiosClient.post('/shops/sub-pricing', { code });
+    },
 }

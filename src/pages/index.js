@@ -1,13 +1,16 @@
 import { shopApi } from "@/api-client";
-import { HomeRecordBanner, NewRecording, UsageSession } from "@/components/Features/Home";
+import { HomeRecordBanner, InstallCode, NewRecording, UsageSession } from "@/components/Features/Home";
 import { MainLayout } from "@/components/Layout";
 import { selectShop, shopActions } from "@/redux/slices/shop.slice";
 import { Container, Grid2, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import useSWR from "swr";
 export default function Home() {
   const dispatch = useDispatch();
-  const shop = useSelector(selectShop);
+
+  const { data: { data: shop } } = useSWR('/shops');
+  const { data: last24H } = useSWR('/sessions/last-24h');
 
   const handleModuleChange = async (status) => {
     try {
@@ -37,9 +40,11 @@ export default function Home() {
         </Grid2>
 
         <Grid2 size={6}>
-          <NewRecording />
+          <NewRecording count={last24H?.data} />
         </Grid2>
       </Grid2>
+
+      <InstallCode code={shop?.code} />
     </Container>
   );
 }
