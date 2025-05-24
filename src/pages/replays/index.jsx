@@ -1,9 +1,8 @@
-import { ReplayFilter, ReplayTable } from '@/components/Features/Replay';
+import { ReplayTable } from '@/components/Features/Replay';
 import { MainLayout } from '@/components/Layout';
 import { selectSessionFilter, sessionActions } from '@/redux/slices/session.slice';
-import { Box, Container, Pagination, Stack } from '@mui/material';
+import { Box, Container, Pagination, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useSWR from 'swr';
 
@@ -15,12 +14,9 @@ export default function ReplayList() {
 
     const { data: sessions } = useSWR(`/sessions?page=${page}&limit=${limit}`);
 
-    const handlePlaySession = useCallback(
-        (session) => {
-            router.push(`/replays/${session._id}`);
-        },
-        [router]
-    );
+    const handlePlaySession = (session) => {
+        router.push(`/replays/${session._id}`);
+    };
 
     const handlePageChange = (value) => {
         dispatch(
@@ -34,7 +30,10 @@ export default function ReplayList() {
     return (
         <Container>
             <Stack spacing={2}>
-                <ReplayFilter />
+                <Typography variant='h4' gutterBottom>
+                    Session Replays
+                </Typography>
+
                 <ReplayTable sessions={sessions} onPlay={handlePlaySession} />
 
                 <Box

@@ -1,6 +1,7 @@
 import { MerchantLoginForm } from '@/components/Features/Merchant';
 import { Box, Paper, Typography } from '@mui/material';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 
@@ -59,6 +60,19 @@ export default function Login() {
                     </Typography>
 
                     <MerchantLoginForm initial={initialMerchant} onSubmit={handleLogin} />
+
+                    <Typography variant='body2' align='center'>
+                        Don't have an account?{' '}
+                        <Link href='/merchants/register' passHref legacyBehavior>
+                            <Typography
+                                component='a'
+                                color='primary'
+                                sx={{ fontWeight: 500, textDecoration: 'none', cursor: 'pointer' }}
+                            >
+                                Sign up
+                            </Typography>
+                        </Link>
+                    </Typography>
                 </Paper>
             </Box>
         </Box>

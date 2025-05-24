@@ -58,5 +58,5 @@ export const SnapshotHelper = {
         } catch (error) {
             console.log("Error building snapshot:", error);
         }
-    }
+    },
 }

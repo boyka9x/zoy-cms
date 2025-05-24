@@ -1,11 +1,5 @@
-import { MenuItem, Select } from '@mui/material';
+import { Button } from '@mui/material';
 import { useState } from 'react';
-
-const CLICK_TYPES = [
-    { type: 'all', label: 'All Clicks' },
-    { type: 'first-click', label: 'First Clicks' },
-    { type: 'last-click', label: 'Last Clicks' },
-];
 
 export const HeatmapClickType = ({ onChange }) => {
     const [selected, setSelected] = useState('all');
@@ -17,17 +11,8 @@ export const HeatmapClickType = ({ onChange }) => {
     };
 
     return (
-        <Select
-            labelId='click-type-select-label'
-            value={selected}
-            label='Click Type'
-            onChange={handleChange}
-        >
-            {CLICK_TYPES.map(({ type, label }) => (
-                <MenuItem key={type} value={type}>
-                    {label}
-                </MenuItem>
-            ))}
-        </Select>
+        <Button variant='outlined' size='small'>
+            All Clicks
+        </Button>
     );
 };

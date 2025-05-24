@@ -50,12 +50,18 @@ export default function RegisterMerchant() {
                         onSubmit={handleMerchantRegister}
                     />
 
-                    <Box mt={2}>
-                        <Typography variant='body1' component='div' align='center'>
-                            Đã có tài khoản? &nbsp;
-                            <Link href='/login'>Đăng nhập ngay</Link>
-                        </Typography>
-                    </Box>
+                    <Typography variant='body1' component='div' align='center'>
+                        Already have an account?{' '}
+                        <Link href='/merchants/login' passHref legacyBehavior>
+                            <Typography
+                                component='a'
+                                color='primary'
+                                sx={{ fontWeight: 500, textDecoration: 'none', cursor: 'pointer' }}
+                            >
+                                Sign in
+                            </Typography>
+                        </Link>
+                    </Typography>
                 </Paper>
             </Box>
         </Box>

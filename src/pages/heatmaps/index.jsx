@@ -1,25 +1,21 @@
-import { HeatmapFilter, HeatmapTable } from '@/components/Features/Heatmap';
+import { HeatmapTable } from '@/components/Features/Heatmap';
 import { MainLayout } from '@/components/Layout';
 import { heatmapActions } from '@/redux/slices/heatmap.slice';
-import { Box, Container, Pagination, Stack } from '@mui/material';
+import { Box, Container, Pagination, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import useSWR from 'swr';
 
 export default function HeatmapPage() {
     const router = useRouter();
     const dispatch = useDispatch();
+    const [filter, setFilter] = useState({
+        page: 1,
+        limit: 5,
+    });
 
-    const { data: pageviews } = useSWR(
-        '/pageviews/list-page?' +
-            new URLSearchParams({
-                page: 1,
-                limit: 5,
-                from: new Date().toUTCString(),
-                to: new Date().toUTCString(),
-            })
-    );
+    const { data: pageviews } = useSWR('/pageviews/list-page?' + new URLSearchParams(filter));
 
     const handleViewHeatmap = useCallback(
         (page) => {
@@ -30,10 +26,19 @@ export default function HeatmapPage() {
         [router]
     );
 
+    const handlePageChange = (event, value) => {
+        setFilter((prev) => ({
+            ...prev,
+            page: value,
+        }));
+    };
+
     return (
         <Container>
             <Stack spacing={2}>
-                <HeatmapFilter />
+                <Typography variant='h4' gutterBottom>
+                    Heatmaps
+                </Typography>
                 <HeatmapTable pageviews={pageviews} onView={handleViewHeatmap} />
 
                 <Box
@@ -44,10 +49,11 @@ export default function HeatmapPage() {
                     }}
                 >
                     <Pagination
-                        defaultPage={pageviews?.page}
+                        page={filter.page}
                         count={Math.ceil(pageviews?.total / pageviews?.limit) || 0}
                         variant='outlined'
                         shape='rounded'
+                        onChange={handlePageChange}
                     />
                 </Box>
             </Stack>
