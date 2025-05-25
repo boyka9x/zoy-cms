@@ -83,7 +83,15 @@ export default function AnalyticsDashboard() {
                             Devices
                         </Typography>
                         <PieChart
-                            series={[{ data: deviceData, innerRadius: 60 }]}
+                            series={[
+                                {
+                                    data: deviceData,
+                                    innerRadius: 30,
+                                    outerRadius: 100,
+                                    paddingAngle: 5,
+                                    cornerRadius: 5,
+                                },
+                            ]}
                             width={300}
                             height={300}
                         />
@@ -97,7 +105,15 @@ export default function AnalyticsDashboard() {
                             Operating Systems
                         </Typography>
                         <PieChart
-                            series={[{ data: osData, innerRadius: 60 }]}
+                            series={[
+                                {
+                                    data: osData,
+                                    innerRadius: 30,
+                                    outerRadius: 100,
+                                    paddingAngle: 5,
+                                    cornerRadius: 5,
+                                },
+                            ]}
                             width={300}
                             height={300}
                         />
@@ -111,7 +127,15 @@ export default function AnalyticsDashboard() {
                             Browsers
                         </Typography>
                         <PieChart
-                            series={[{ data: browserData, innerRadius: 60 }]}
+                            series={[
+                                {
+                                    data: browserData,
+                                    innerRadius: 30,
+                                    outerRadius: 100,
+                                    paddingAngle: 5,
+                                    cornerRadius: 5,
+                                },
+                            ]}
                             width={300}
                             height={300}
                         />

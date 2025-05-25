@@ -17,4 +17,7 @@ export const shopApi = {
     subPricing: ({ code }) => {
         return axiosClient.post('/shops/sub-pricing', { code });
     },
+    integration: (payload) => {
+        return axiosClient.post('/shops/update-integration', payload);
+    },
 }
