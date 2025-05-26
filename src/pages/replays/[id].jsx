@@ -1,4 +1,3 @@
-import { ReplayTimeline } from '@/components/Features/Replay';
 import { MainLayout } from '@/components/Layout';
 import { Box, Grid } from '@mui/material';
 import { useRouter } from 'next/router';
@@ -33,13 +32,8 @@ export default function Replay() {
         <Box sx={{ height: '100vh', p: 2, boxSizing: 'border-box' }}>
             <Grid container spacing={2} sx={{ height: '100%' }}>
                 {/* RRWeb Player Area */}
-                <Grid item xs={12} md={8}>
+                <Grid xs={12}>
                     <div ref={containerRef} />
-                </Grid>
-
-                {/* Timeline Area */}
-                <Grid item xs={12} md={4} sx={{ height: '100%', overflowY: 'auto' }}>
-                    <ReplayTimeline />
                 </Grid>
             </Grid>
         </Box>

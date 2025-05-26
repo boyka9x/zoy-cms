@@ -58,7 +58,6 @@ export const ReplayTable = ({ sessions, onPlay }) => {
         <TableContainer
             component={Paper}
             sx={{
-                maxHeight: 440,
                 borderRadius: 2,
                 boxShadow: 3,
             }}
