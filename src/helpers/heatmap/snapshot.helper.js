@@ -33,7 +33,7 @@ export const SnapshotHelper = {
             await new Promise((resolve) => {
                 setTimeout(() => {
                     resolve();
-                }, 500);
+                }, 1000);
             });
 
             const iframeDocument = iframe.contentDocument.documentElement;

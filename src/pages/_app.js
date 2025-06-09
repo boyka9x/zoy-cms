@@ -8,14 +8,9 @@ import { axiosClient } from "@/api-client";
 import { CssBaseline, StyledEngineProvider } from "@mui/material";
 import AppTheme from "@/components/Theme/App";
 import { chartsCustom, dataGridCustom, datePickersCustom, treeViewCustom } from "@/components/Theme/Custom/Layout";
-import dynamic from 'next/dynamic';
 import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
 import { SessionProvider } from "next-auth/react";
-
-const LocalizationProvider = dynamic(
-  () => import('@mui/x-date-pickers-pro').then((mod) => mod.LocalizationProvider),
-  { ssr: false }
-);
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 const xThemeComponents = {
   ...chartsCustom,

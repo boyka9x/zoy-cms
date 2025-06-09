@@ -1,4 +1,4 @@
-import { PlayCircle } from '@mui/icons-material';
+import { PlayCircle, ReplayCircleFilled } from '@mui/icons-material';
 import {
     IconButton,
     Paper,
@@ -33,7 +33,7 @@ function countryCodeToEmoji(countryCode) {
         .join('');
 }
 
-function formatDuration(seconds) {
+export function formatDuration(seconds) {
     if (!seconds || isNaN(seconds)) return '0s';
 
     const h = Math.floor(seconds / 3600);
@@ -97,15 +97,19 @@ export const ReplayTable = ({ sessions, onPlay }) => {
                                     : '-'}
                             </TableCell>
                             <TableCell align='center'>
-                                <Tooltip title='Play session'>
+                                <Tooltip title={session.viewed ? 'Replay session' : 'Play session'}>
                                     <IconButton
-                                        aria-label='play session'
+                                        aria-label={
+                                            session.viewed ? 'replay session' : 'play session'
+                                        }
                                         size='small'
                                         color='primary'
                                         onClick={() => handlePlaySession(session)}
                                         sx={{
-                                            bgcolor: 'primary.light',
-                                            color: 'primary.dark',
+                                            bgcolor: session.viewed
+                                                ? 'warning.light'
+                                                : 'primary.light',
+                                            color: session.viewed ? 'warning.dark' : 'primary.dark',
                                             '&:hover': {
                                                 bgcolor: 'primary.main',
                                                 color: 'white',
@@ -115,7 +119,11 @@ export const ReplayTable = ({ sessions, onPlay }) => {
                                             transition: 'all 0.3s ease',
                                         }}
                                     >
-                                        <PlayCircle fontSize='small' />
+                                        {session.viewed ? (
+                                            <ReplayCircleFilled fontSize='small' />
+                                        ) : (
+                                            <PlayCircle fontSize='small' />
+                                        )}
                                     </IconButton>
                                 </Tooltip>
                             </TableCell>

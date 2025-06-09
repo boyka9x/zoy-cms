@@ -4,6 +4,7 @@ const initialState = {
     filter: {
         page: 1,
         limit: 10,
+        date: null,
     },
     loading: false,
 };

@@ -37,12 +37,13 @@ export const HeatmapBuilder = {
                 },
             });
 
+            heatmap.setDataMin(1);
             heatmap.setDataMax(1);
 
             let rank = 0;
             for (const point of points) {
                 rank++;
-                const { selector, positions, counts } = point;
+                const { selector, positions, textContent, counts } = point;
                 if (!selector) {
                     continue;
                 }

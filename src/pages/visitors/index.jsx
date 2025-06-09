@@ -9,16 +9,58 @@ import {
     Stack,
     CircularProgress,
     Box,
+    Button,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    Pagination,
 } from '@mui/material';
 import useSWR from 'swr';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import GroupIcon from '@mui/icons-material/Group';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import { formatDuration } from '@/components/Features/Replay';
 
 dayjs.extend(relativeTime);
 
 export default function Visitors() {
-    const { data: visitors, isLoading } = useSWR('/visitors');
+    const router = useRouter();
+    const [openModalVisitor, setOpenModalVisitor] = useState(null);
+    const [filter, setFilter] = useState({
+        page: 1,
+        limit: 6,
+    });
+
+    const { data: visitors, isLoading } = useSWR(
+        `/visitors?page=${filter.page}&limit=${filter.limit}`
+    );
+
+    const handlePageChange = (value) => {
+        setFilter({
+            ...filter,
+            page: value,
+        });
+    };
+
+    const handleOpenModal = (visitor) => {
+        setOpenModalVisitor(visitor);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModalVisitor(null);
+    };
+
+    const handleSessionClick = (sessionId) => {
+        router.push(`/replays/${sessionId}`);
+        handleCloseModal();
+    };
 
     if (isLoading) {
         return (
@@ -81,11 +123,98 @@ export default function Visitors() {
                                         ? dayjs(visitor.lastActive).fromNow()
                                         : 'N/A'}
                                 </Typography>
+
+                                <Box mt={2}>
+                                    <Button
+                                        variant='outlined'
+                                        size='small'
+                                        onClick={() => handleOpenModal(visitor)}
+                                    >
+                                        Show Sessions
+                                    </Button>
+                                </Box>
                             </CardContent>
                         </Card>
                     </Grid>
                 ))}
             </Grid>
+
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+                <Pagination
+                    page={filter.page}
+                    count={Math.ceil(visitors?.total / filter.limit)}
+                    variant='outlined'
+                    shape='rounded'
+                    onChange={handlePageChange}
+                />
+            </Box>
+
+            <Dialog open={!!openModalVisitor} onClose={handleCloseModal} maxWidth='sm' fullWidth>
+                <DialogTitle>
+                    Sessions of Visitor #{openModalVisitor?.display_id || openModalVisitor?._id}
+                </DialogTitle>
+                <DialogContent dividers>
+                    {openModalVisitor?.session?.length ? (
+                        <List>
+                            {openModalVisitor.session.slice(0, 5).map((session) => (
+                                <ListItem
+                                    key={session._id}
+                                    disablePadding
+                                    secondaryAction={
+                                        <Button
+                                            variant='outlined'
+                                            onClick={() => handleSessionClick(session._id)}
+                                        >
+                                            <PlayArrowIcon />
+                                        </Button>
+                                    }
+                                >
+                                    <ListItemButton onClick={() => handleSessionClick(session._id)}>
+                                        <ListItemText
+                                            primary={`Session #${session._id.slice(-6)}`}
+                                            secondary={
+                                                <>
+                                                    <Stack
+                                                        direction='row'
+                                                        spacing={1}
+                                                        alignItems='center'
+                                                    >
+                                                        <Typography
+                                                            variant='body2'
+                                                            color='textSecondary'
+                                                        >
+                                                            Last Active:{' '}
+                                                            {dayjs(session.lastActive).format(
+                                                                'YYYY-MM-DD HH:mm:ss'
+                                                            )}
+                                                        </Typography>
+                                                        <Typography
+                                                            variant='body2'
+                                                            color='textSecondary'
+                                                            sx={{ ml: 2 }}
+                                                        >
+                                                            Duration:{' '}
+                                                            {formatDuration(session.duration)}
+                                                        </Typography>
+                                                    </Stack>
+                                                </>
+                                            }
+                                        />
+                                    </ListItemButton>
+                                </ListItem>
+                            ))}
+                        </List>
+                    ) : (
+                        <Typography>No sessions found.</Typography>
+                    )}
+                </DialogContent>
+            </Dialog>
         </Container>
     );
 }

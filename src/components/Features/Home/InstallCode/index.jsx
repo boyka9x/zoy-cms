@@ -5,13 +5,13 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 export const InstallCode = ({ code }) => {
     const [copied, setCopied] = useState(false);
 
-    const scriptCode = `<script>
+    const scriptCode = `<script defer>
     window.ZOY_CODE = "${code}";
 
     (function() {
         var script = document.createElement("script");
         script.src = "http://localhost:5000/cdn/record.zoy.js";
-        script.async = true;
+        script.defer = true;
         document.head.appendChild(script);
     })();
 </script>`;
